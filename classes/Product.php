@@ -17,4 +17,10 @@ class Product extends Test
         if (!isset($db->con)) return null;
         $this->db = $db;
     }
+
+    public function fetchData($products)
+    {
+        $results = $products->getData();
+        echo json_encode(['productResult' => $results]);
+    }
 }

@@ -7,6 +7,5 @@ include('./functions.php');
 
 
 // Get data and Insert it into the database
-$productData = file_get_contents('php://input');
-$result = json_decode($productData);
-$products->insert($result);
+$products = new Product($db);
+$products->insert($productData);

@@ -7,5 +7,5 @@ header("Access-Control-Allow-Methods: GET, POST");
 include('./functions.php');
 
 // fetch product
-$results = $products->getData();
-echo json_encode(['productResult' => $results]);
+$product = new Product($db);
+$products->fetchData($products);

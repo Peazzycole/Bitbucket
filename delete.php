@@ -7,6 +7,5 @@ include('./functions.php');
 
 
 // Get data and Insert it into the database
-$json = file_get_contents('php://input');
-$checkBoxData = json_decode($json);
+$products = new Product($db);
 $products->deleteData($checkBoxData);

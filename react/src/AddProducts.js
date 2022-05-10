@@ -82,7 +82,8 @@ export default function AddProducts() {
 
 
 
-        axios.post('https://peazzycoletest.000webhostapp.com/insert.php', obj)
+        // axios.post('https://peazzycoletest.000webhostapp.com/insert.php', obj)
+        axios.post('http://localhost/test/Bitbucket/index.php', obj)
             .then(res => console.log(res.data));
         navigate('/')
         console.log(obj)
