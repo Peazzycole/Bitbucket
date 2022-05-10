@@ -19,7 +19,8 @@ export default function Products() {
 
     const loadProducts = async () => {
 
-        const result = await axios.get("https://peazzycoletest.000webhostapp.com/getdata.php");
+        const result = await axios.get("https://peazzycoletest.000webhostapp.com/sendData.php");
+
 
         setProduct(result.data.productResult);
         // console.log(result.data.productResult);
@@ -33,6 +34,7 @@ export default function Products() {
 
 
         axios.post('https://peazzycoletest.000webhostapp.com/delete.php', selected)
+
             .then(res => console.log(res.data));
         navigate('/')
         // console.log(selected)

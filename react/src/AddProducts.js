@@ -123,7 +123,7 @@ export default function AddProducts() {
                                     type='text'
                                     name="sku"
                                     placeholder="#sku"
-                                    value={formData.SKU}
+                                    value={formData.sku}
                                     onChange={handleChange}
                                     required={true}
                                 />
@@ -164,8 +164,8 @@ export default function AddProducts() {
                         <tr >
                             <td htmlFor="switcher">Type switcher</td>
                             <td>
-                                <select id="productType" value={formSelect} onChange={handleOnChange}>
-                                    <option value="selectAttribute">Type switcher</option>
+                                <select required id="productType" value={formSelect} onChange={handleOnChange}>
+                                    <option value="">Type switcher</option>
                                     <option value="book">Book</option>
                                     <option value="dvd">DVD</option>
                                     <option value="furniture">Furniture</option>
