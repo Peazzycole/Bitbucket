@@ -40,7 +40,7 @@ class Product extends Test
 
         for ($i = 0; $i < count($this->datas); $i++) {
             $this->sku = json_encode($this->datas[$i]);
-            $this->db->query("DELETE FROM `{$this->table}` WHERE sku ={$this->sku}");
+            $this->db->query("DELETE FROM `{$this->table}`  sku ={$this->sku}");
 
             if ($this->db->execute()) {
                 return true;

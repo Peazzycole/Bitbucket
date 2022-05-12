@@ -5,7 +5,7 @@ header("Access-Control-Allow-Methods: GET, POST");
 
 include('./functions.php');
 
-
+// var_dump($products->getProduct());
 // Get data and Insert it into the database
 $products = new Product();
 
@@ -20,5 +20,5 @@ $json = file_get_contents('php://input');
 //     print_r($sku);
 // }
 
-// var_dump($products->getProductByID(1234));
+
 $products->deleteData($json);
