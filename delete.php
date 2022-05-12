@@ -9,7 +9,7 @@ include('./functions.php');
 // Get data and Insert it into the database
 $products = new Product();
 
-$json = file_get_contents('php://input');
+
 // $yeah = json_decode($json);
 // $datas = $yeah->checkBox;
 // // print_r($datas);

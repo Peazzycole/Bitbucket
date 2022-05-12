@@ -35,12 +35,13 @@ class Product extends Test
     // delete products
     public function deleteData($json)
     {
+        $json = file_get_contents('php://input');
         $obj = json_decode($json);
         $this->datas = $obj->checkBox;
 
         for ($i = 0; $i < count($this->datas); $i++) {
             $this->sku = json_encode($this->datas[$i]);
-            $this->db->query("DELETE FROM `{$this->table}`  sku ={$this->sku}");
+            $this->db->query("DELETE FROM `{$this->table}` where sku ={$this->sku}");
 
             if ($this->db->execute()) {
                 return true;
