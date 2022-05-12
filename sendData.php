@@ -8,7 +8,5 @@ include('./functions.php');
 
 
 $products = new Product();
-
-// send products
-$results = $products->getProduct();
+$results = $products->getAll();
 echo json_encode(['productResult' => $results]);

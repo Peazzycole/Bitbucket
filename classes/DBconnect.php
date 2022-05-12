@@ -11,67 +11,23 @@ class DBController
     protected $stmt;
 
 
-    // connection property
-    protected $con;
-    protected $error;
 
 
-    // PDO connection
-    public function __construct()
+
+
+    private $conn;
+
+    function __construct()
     {
-        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->database;
-        $options = array(
-            PDO::ATTR_PERSISTENT => true,
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
-        );
-        try {
-            $this->con = new PDO($dsn, $this->user, $this->password, $options);
-        } catch (PDOException $e) {
-            $this->error = $e->getMessage() . PHP_EOL;
+        $this->conn = new mysqli($this->host, $this->user, $this->password, $this->database);
+        $this->conn->set_charset('utf8mb4');
+        if ($this->conn->connect_error) {
+            die("Connection failed: " . $this->connection->connect_error);
         }
     }
 
-
-    // query method
-    public function query($query)
+    public function get()
     {
-        $this->stmt = $this->con->prepare($query);
-    }
-
-
-    // Execute prepared statement
-    public function execute()
-    {
-        return $this->stmt->execute();
-    }
-
-
-    // get result as array
-    public function resultset()
-    {
-        $this->execute();
-        return $this->stmt->fetchAll(PDO::FETCH_OBJ);
-    }
-
-    // row count
-    public function rowCount()
-    {
-        return $this->stmt->rowCount();
-    }
-
-    // get single product
-    public function singleProduct()
-    {
-        $this->execute();
-        return $this->stmt->fetch(PDO::FETCH_OBJ);
-    }
-
-
-    // bind
-    public function bind($param, $value)
-    {
-        $this->stmt->bindValue($param, $value);
+        return $this->conn;
     }
 }
-
-// $db = new DBController();
