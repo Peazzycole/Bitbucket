@@ -2,28 +2,51 @@
 
 class Product extends Test
 {
-    protected $table;
-    protected $sku;
-    protected $name;
-    protected $price;
-    protected $attribute;
-    protected $type;
-    protected $datas;
-    protected $db;
 
-    // dependency injection
 
-    public function __construct(DBController $db)
+    // insert records
+    public function addProduct($productData)
     {
-        $this->table = 'products';
+        $request = json_decode($productData);
+        $this->sku = $request->sku;
+        $this->name = $request->name;
+        $this->price = $request->price;
+        $this->attribute = $request->attribute;
+        $this->type = $request->type;
 
-        if (!isset($db->con)) return null;
-        $this->db = $db;
+        if ($this->sku && $this->name && $this->price && $this->attribute) {
+            $this->db->query("INSERT INTO `{$this->table}`(
+                        `sku`,
+                        `name`,
+                        `price`,
+                        `attribute`,
+                        `type`)
+                        VALUES ('{$this->sku}','{$this->name}', '{$this->price}', '{$this->attribute}', '{$this->type}')");
+        }
+
+        if ($this->db->execute()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
-    public function fetchData($products)
+
+    // delete products
+    public function deleteData($json)
     {
-        $results = $products->getData();
-        echo json_encode(['productResult' => $results]);
+        $obj = json_decode($json);
+        $this->datas = $obj->checkBox;
+
+        for ($i = 0; $i < count($this->datas); $i++) {
+            $this->sku = json_encode($this->datas[$i]);
+            $this->db->query("DELETE FROM `{$this->table}` WHERE sku ={$this->sku}");
+
+            if ($this->db->execute()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 }

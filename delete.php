@@ -7,5 +7,18 @@ include('./functions.php');
 
 
 // Get data and Insert it into the database
-$products = new Product($db);
-$products->deleteData($checkBoxData);
+$products = new Product();
+
+$json = file_get_contents('php://input');
+// $yeah = json_decode($json);
+// $datas = $yeah->checkBox;
+// // print_r($datas);
+
+// for ($i = 0; $i < count($datas); $i++) {
+//     $sku = json_encode($datas[$i]);;
+
+//     print_r($sku);
+// }
+
+// var_dump($products->getProductByID(1234));
+$products->deleteData($json);

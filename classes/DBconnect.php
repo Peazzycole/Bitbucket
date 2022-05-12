@@ -8,33 +8,70 @@ class DBController
     protected $user = 'root';
     protected $password = '';
     protected $database = "scandiw";
-
+    protected $stmt;
 
 
     // connection property
-    public $con = null;
+    protected $con;
+    protected $error;
 
-    // call constructor
+
+    // PDO connection
     public function __construct()
     {
-        $this->con = mysqli_connect($this->host, $this->user, $this->password, $this->database);
-        if ($this->con->connect_error) {
-            echo "Fail " . $this->con->connect_error;
+        $dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->database;
+        $options = array(
+            PDO::ATTR_PERSISTENT => true,
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+        );
+        try {
+            $this->con = new PDO($dsn, $this->user, $this->password, $options);
+        } catch (PDOException $e) {
+            $this->error = $e->getMessage() . PHP_EOL;
         }
     }
 
-    // for mysqli closing connection
-    protected function closeConnection()
+
+    // query method
+    public function query($query)
     {
-        if ($this->con != null) {
-            $this->con->close();
-            $this->con = null;
-        }
+        $this->stmt = $this->con->prepare($query);
     }
 
 
-    public function __destruct()
+    // Execute prepared statement
+    public function execute()
     {
-        $this->closeConnection();
+        return $this->stmt->execute();
+    }
+
+
+    // get result as array
+    public function resultset()
+    {
+        $this->execute();
+        return $this->stmt->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    // row count
+    public function rowCount()
+    {
+        return $this->stmt->rowCount();
+    }
+
+    // get single product
+    public function singleProduct()
+    {
+        $this->execute();
+        return $this->stmt->fetch(PDO::FETCH_OBJ);
+    }
+
+
+    // bind
+    public function bind($param, $value)
+    {
+        $this->stmt->bindValue($param, $value);
     }
 }
+
+// $db = new DBController();

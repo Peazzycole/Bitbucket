@@ -5,7 +5,13 @@ header("Access-Control-Allow-Methods: GET, POST");
 
 include('./functions.php');
 
+$products = new Product();
 
-// Get data and Insert it into the database
-$products = new Product($db);
-$products->insert($productData);
+// get products
+var_dump($products->getProduct());
+
+
+// save products in database
+$productData = file_get_contents('php://input');
+$products->addProduct($productData);
+var_dump($products->getProduct());
