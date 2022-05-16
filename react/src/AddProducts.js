@@ -24,15 +24,9 @@ export default function AddProducts() {
     })
     const [formSelect, setFormSelect] = useState('selectAttribute')
 
-
-
     const navigate = useNavigate();
 
-
-
-    const [book, setBook] = useState(false);
-    const [dvd, setDvd] = useState(false);
-    const [furniture, setFurniture] = useState(false);
+    const [type, setType] = useState(false);
 
 
 
@@ -41,11 +35,7 @@ export default function AddProducts() {
 
 
     useEffect(() => {
-        formSelect === "book"
-            ? setBook(true)
-            : setBook(false);
-        formSelect === "dvd" ? setDvd(true) : setDvd(false);
-        formSelect === "furniture" ? setFurniture(true) : setFurniture(false);
+        setType(formSelect);
     }, [formSelect]);
 
 
@@ -60,35 +50,47 @@ export default function AddProducts() {
         }))
     }
 
-    const typeUp = book ? 1 : dvd ? 2 : 3
-    const attribute = book ? formData.weight + 'KG' : dvd ? formData.size + 'MB' : formData.height + 'x' + formData.width + 'x' + formData.length
+
+
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        // const book = formData.weight + 'KG';
-        // const dvd = formData.size + 'MB';
-        // const furniture = formData.height + 'x' + formData.width + 'x' + formData.length
 
-
-        const obj = {
-            sku: formData.sku,
-            name: formData.name,
-            price: formData.price,
-            attribute: attribute,
-            type: typeUp
-
+        const productTypes = {
+            'furniture': furniture,
+            'dvd': dvd,
+            'book': book
         }
-        console.log(obj.type)
+
+        function book(args, type) {
+            const { sku, name, price, weight } = args;
+            const obj = { sku, name, price, weight, type }
+            return obj;
+        }
+
+        function dvd(args, type) {
+            const { sku, name, price, size } = args;
+            const obj = { sku, name, price, size, type }
+            return obj;
+        }
+
+        function furniture(args, type) {
+            const { sku, name, price, width, length, height } = args;
+            const obj = { sku, name, price, width, length, height, type }
+            return obj;
+        }
+
+        const obj = productTypes[type](formData, type);
 
 
-
-        // axios.post('https://peazzycoletest.000webhostapp.com/insert.php', obj)
-        axios.post('http://localhost/test/Bitbucket/index.php', obj)
+        axios.post('https://peazzycoletest.000webhostapp.com/insert.php', obj)
+            // axios.post('http://localhost/Test/Bitbucket/index.php', obj)
             .then(res => console.log(res.data));
         navigate('/')
         console.log(obj)
         return
     }
+
 
     const handleOnChange = (e) => {
         setFormSelect(e.target.value);
@@ -175,7 +177,7 @@ export default function AddProducts() {
                         </tr>
 
                         {/* book option */}
-                        {book && <tr>
+                        {type === 'book' && <tr>
                             <td htmlFor="weight">Weight (KG)</td>
                             <td> <input
                                 id="weight"
@@ -194,7 +196,7 @@ export default function AddProducts() {
 
 
                         {/* dvd option */}
-                        {dvd && <tr>
+                        {type === 'dvd' && <tr>
                             <td htmlFor="size">Size (MB)</td>
                             <td> <input
                                 id="size"
@@ -210,7 +212,7 @@ export default function AddProducts() {
 
                     </table>
                     {/* furniture option */}
-                    {furniture && <tr>
+                    {type === 'furniture' && <tr>
 
                         <td htmlFor="height">Height (CM)</td>
                         <td> <input
@@ -226,7 +228,7 @@ export default function AddProducts() {
                     </tr>
                     }
 
-                    {furniture && <tr>
+                    {type === 'furniture' && <tr>
                         <td htmlFor="height">Width (CM)</td>
                         <td> <input
                             id="width"
@@ -240,7 +242,7 @@ export default function AddProducts() {
                         </td>
                     </tr>}
 
-                    {furniture && <tr>
+                    {type === 'furniture' && <tr>
                         <td htmlFor="length">Length (CM)</td>
                         <td> <input
                             id="length"
@@ -261,9 +263,9 @@ export default function AddProducts() {
 
                 </form>
                 <div>
-                    {book && <p>Please, provide weight</p>}
-                    {dvd && <p>Please, provide size</p>}
-                    {furniture && <p>Please, provide dimensions</p>}
+                    {type === 'book' && <p>Please, provide weight</p>}
+                    {type === 'dvd' && <p>Please, provide size</p>}
+                    {type === 'furniture' && <p>Please, provide dimensions</p>}
                 </div>
             </div>
         </div >

@@ -1,10 +1,18 @@
 <?php
+
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Headers: *");
 header("Access-Control-Allow-Methods: GET, POST");
 
-include('./functions.php');
+require_once('./vendor/autoload.php');
 
-$products = new Product();
+$prodType = [
+    "book" => 'App\Book',
+    "furniture" => 'App\Furniture',
+    "dvd" => 'App\Dvd'
+];
+
 $productData = file_get_contents('php://input');
-$products->insert($productData);
+$result = json_decode($productData);
+$product = new $prodType[$result->type]($result);
+$product->save();

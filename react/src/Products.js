@@ -19,8 +19,8 @@ export default function Products() {
 
     const loadProducts = async () => {
 
-        // const result = await axios.get("https://peazzycoletest.000webhostapp.com/sendData.php");
-        const result = await axios.get("http://localhost/test/Bitbucket/sendData.php");
+        const result = await axios.get("https://peazzycoletest.000webhostapp.com/display.php");
+        // const result = await axios.get("http://localhost/Test/Bitbucket/display.php");
 
 
         setProduct(result.data.productResult);
@@ -34,12 +34,12 @@ export default function Products() {
 
 
 
-        // await axios.post('https://peazzycoletest.000webhostapp.com/delete.php', selected)
-        await axios.post('http://localhost/test/Bitbucket/delete.php', selected)
+        await axios.post('https://peazzycoletest.000webhostapp.com/delete.php', selected)
+            // await axios.post('http://localhost/Test/Bitbucket/delete.php', selected)
 
             .then(res => console.log(res.data));
         navigate('/')
-        // console.log(selected)
+        console.log(selected)
         return
 
     }
@@ -74,7 +74,8 @@ export default function Products() {
 
     useEffect(() => {
         loadProducts();
-    }, []);
+        handleSubmit();
+    });
 
     return (
 
@@ -107,9 +108,9 @@ export default function Products() {
                                 <h5>#{res.sku}</h5>
                                 <h5>{res.name}</h5>
                                 <h5>{res.price}$</h5>
-                                {res.type == 1 && <h5>Size: {res.attribute}</h5>}
-                                {res.type == 2 && <h5>Weight: {res.attribute}</h5>}
-                                {res.type == 3 && <h5>Dimension: {res.attribute}</h5>}
+                                {res.type === 'dvd' && <h5>Size: {res.attribute}</h5>}
+                                {res.type === 'book' && <h5>Weight: {res.attribute}</h5>}
+                                {res.type === 'furniture' && <h5>Dimension: {res.attribute}</h5>}
 
 
                             </div>
