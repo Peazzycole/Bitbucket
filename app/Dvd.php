@@ -16,11 +16,11 @@ class Dvd extends Product
     public function save()
     {
         $this->dbConn->query("INSERT INTO products(name, sku, price, attribute, type) VALUES(:name, :sku, :price, :attribute , :type)");
-        $this->dbConn->bind(':name', $this->name);
-        $this->dbConn->bind(':sku', $this->sku);
-        $this->dbConn->bind(':price', $this->price);
-        $this->dbConn->bind(':attribute', $this->attribute);
-        $this->dbConn->bind(':type', $this->type);
+        $this->dbConn->bind(':name', $this->getName());
+        $this->dbConn->bind(':sku', $this->getSku());
+        $this->dbConn->bind(':price', $this->getPrice());
+        $this->dbConn->bind(':attribute', $this->getAttr());
+        $this->dbConn->bind(':type', $this->getType());
         $this->dbConn->execute();
     }
 }

@@ -19,8 +19,8 @@ export default function Products() {
 
     const loadProducts = async () => {
 
-        const result = await axios.get("https://peazzycoletest.000webhostapp.com/display.php");
-        // const result = await axios.get("http://localhost/Test/Bitbucket/display.php");
+        // const result = await axios.get("https://peazzycoletest.000webhostapp.com/display.php");
+        const result = await axios.get("http://localhost/Test/Bitbucket/display.php");
 
 
         setProduct(result.data.productResult);
@@ -30,8 +30,8 @@ export default function Products() {
 
     const handleSubmit = async (e) => {
         await e.preventDefault()
-        await axios.post('https://peazzycoletest.000webhostapp.com/delete.php', selected)
-            // await axios.post('http://localhost/Test/Bitbucket/delete.php', selected)
+        // await axios.post('https://peazzycoletest.000webhostapp.com/delete.php', selected)
+        await axios.post('http://localhost/Test/Bitbucket/delete.php', selected)
 
             .then(res => console.log(res.data));
         console.log(selected)

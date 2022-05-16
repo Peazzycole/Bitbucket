@@ -36,7 +36,12 @@ abstract class Product
     }
     public function getType()
     {
-        return $this->price;
+        return $this->type;
+    }
+
+    public function getAttr()
+    {
+        return $this->attribute;
     }
 
     // -----------------
