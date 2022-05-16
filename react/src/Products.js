@@ -29,17 +29,13 @@ export default function Products() {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        // console.log(obj.type)
-
-
-
+        await e.preventDefault()
         await axios.post('https://peazzycoletest.000webhostapp.com/delete.php', selected)
             // await axios.post('http://localhost/Test/Bitbucket/delete.php', selected)
 
             .then(res => console.log(res.data));
-        navigate('/')
         console.log(selected)
+        navigate('/')
         return
 
     }
