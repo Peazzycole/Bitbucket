@@ -181,7 +181,7 @@ export default function AddProducts() {
                             <td htmlFor="weight">Weight (KG)</td>
                             <td> <input
                                 id="weight"
-                                type='text'
+                                type='number'
                                 name="weight"
                                 placeholder='Enter a number'
                                 value={formData.weight}
