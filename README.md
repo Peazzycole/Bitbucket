@@ -1,7 +1,5 @@
 # Bitbucket
 
-React and PHP
-
 ## Preview
 
 ![CHEESE!](pic.png)

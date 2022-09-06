@@ -67,10 +67,9 @@ export default function AddProducts() {
 
     const obj = productTypes[type](formData, type);
 
-    // axios.post('https://peazzycoletest.000webhostapp.com/insert.php', obj)
-    axios.post("http://localhost/Test/Bitbucket/insert.php", obj);
+    axios.post("https://peazzycoletest.000webhostapp.com/insert.php", obj);
+    // axios.post("http://localhost/Test/Bitbucket/insert.php", obj);
     navigate("/");
-    window.location.reload(false);
   };
 
   const handleOnChange = (e) => {

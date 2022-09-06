@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Products() {
+  const [deleteClicked, setDeleteClicked] = useState(false);
   const [product, setProduct] = useState([]);
 
   const [selected, setSelected] = useState({
@@ -10,24 +11,29 @@ export default function Products() {
   });
 
   const loadProducts = async () => {
-    // const result = await axios.get("https://peazzycoletest.000webhostapp.com/display.php");
     const result = await axios.get(
-      "http://localhost/Test/Bitbucket/display.php"
+      "https://peazzycoletest.000webhostapp.com/display.php"
     );
-
-    setProduct(result.data.productResult);
+    // const result = await axios.get(
+    //   "http://localhost/Test/Bitbucket/display.php"
+    // );
+    const data = await result.data.productResult;
+    setProduct(data);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // await axios.post('https://peazzycoletest.000webhostapp.com/delete.php', selected)
-    await axios.post("http://localhost/Test/Bitbucket/delete.php", selected);
 
-    setSelected({
-      checkBox: [],
-    });
-    loadProducts();
-    return;
+    const newProducts = product.filter(
+      (item) => !selected.checkBox.includes(item.sku)
+    );
+    setProduct(newProducts);
+
+    await axios.post(
+      "https://peazzycoletest.000webhostapp.com/delete.php",
+      selected
+    );
+    // await axios.post("http://localhost/Test/Bitbucket/delete.php", selected);
   };
 
   const toggleCheckbox = (e) => {
