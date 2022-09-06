@@ -8,10 +8,10 @@ use Exception;
 class Database
 {
     // Database Connection Properties
-    protected $host = 'localhost';
-    protected $user = 'root';
-    protected $password = '';
-    protected $database = "scandiw";
+    private $host = 'localhost';
+    private $user = 'root';
+    private $password = '';
+    private $database = "scandiw";
 
     protected $connection;
     protected $error;

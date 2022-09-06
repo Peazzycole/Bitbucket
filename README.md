@@ -1,5 +1,10 @@
 # Bitbucket
+
 React and PHP
+
+## Preview
+
+![CHEESE!](pic.png)
 
 Link to the website: https://peazzycoletest.000webhostapp.com/
 
