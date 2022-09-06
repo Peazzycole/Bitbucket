@@ -38,6 +38,7 @@ export default function AddProducts() {
     }));
   };
 
+  // -----------------------------------
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -72,6 +73,7 @@ export default function AddProducts() {
     navigate("/");
   };
 
+  // -----------------------------------------------
   const handleOnChange = (e) => {
     setFormSelect(e.target.value);
   };

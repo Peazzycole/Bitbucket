@@ -3,7 +3,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Products() {
-  const [deleteClicked, setDeleteClicked] = useState(false);
   const [product, setProduct] = useState([]);
 
   const [selected, setSelected] = useState({
