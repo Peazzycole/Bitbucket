@@ -4,22 +4,26 @@ import { useEffect, useState } from "react";
 
 export default function Products() {
   const [product, setProduct] = useState([]);
-
   const [selected, setSelected] = useState({
     checkBox: [],
   });
 
-  const loadProducts = async () => {
-    const result = await axios.get(
-      "https://peazzycoletest.000webhostapp.com/display.php"
-    );
-    // const result = await axios.get(
-    //   "http://localhost/Test/Bitbucket/display.php"
-    // );
-    const data = await result.data.productResult;
-    setProduct(data);
-  };
+  // load products from API
+  useEffect(() => {
+    const loadProducts = async () => {
+      const result = await axios.get(
+        "https://peazzycoletest.000webhostapp.com/display.php"
+      );
+      // const result = await axios.get(
+      //   "http://localhost/Test/Bitbucket/display.php"
+      // );
+      const data = await result.data.productResult;
+      setProduct(data);
+    };
+    loadProducts();
+  });
 
+  // submit checkbox array to API
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -35,6 +39,7 @@ export default function Products() {
     // await axios.post("http://localhost/Test/Bitbucket/delete.php", selected);
   };
 
+  // toggle function for checkbox
   const toggleCheckbox = (e) => {
     if (e.target.checked) {
       let arr = selected.checkBox;
@@ -51,10 +56,6 @@ export default function Products() {
       });
     }
   };
-
-  useEffect(() => {
-    loadProducts();
-  }, []);
 
   return (
     <div id="products" className="container">

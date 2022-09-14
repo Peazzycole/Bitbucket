@@ -17,12 +17,12 @@ export default function AddProducts() {
     weight: "",
   });
 
-  // state to maintain the type pf product selected
   const [formSelect, setFormSelect] = useState("selectAttribute");
+  const [type, setType] = useState(false);
+  const [product, setProduct] = useState([]);
+  const [isUsed, setIsUSed] = useState(false);
 
   const navigate = useNavigate();
-
-  const [type, setType] = useState(false);
 
   useEffect(() => {
     setType(formSelect);
@@ -37,6 +37,20 @@ export default function AddProducts() {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    const loadProducts = async () => {
+      const result = await axios.get(
+        "https://peazzycoletest.000webhostapp.com/display.php"
+      );
+      // const result = await axios.get(
+      //   "http://localhost/Test/Bitbucket/display.php"
+      // );
+      const data = await result.data.productResult;
+      setProduct(data);
+    };
+    loadProducts();
+  }, []);
 
   // -----------------------------------
   const handleSubmit = (e) => {
@@ -68,10 +82,19 @@ export default function AddProducts() {
 
     const obj = productTypes[type](formData, type);
 
+    for (let i = 0; i < product.length; i++) {
+      if (product[i].sku === obj.sku) {
+        setIsUSed(true);
+        return;
+      }
+    }
+
     axios.post("https://peazzycoletest.000webhostapp.com/insert.php", obj);
     // axios.post("http://localhost/Test/Bitbucket/insert.php", obj);
     navigate("/");
   };
+
+  const error = isUsed ? "1px solid red" : "";
 
   // -----------------------------------------------
   const handleOnChange = (e) => {
@@ -115,7 +138,18 @@ export default function AddProducts() {
                     value={formData.sku}
                     onChange={handleChange}
                     required={true}
+                    style={{ border: error }}
                   />
+                </td>
+                <td>
+                  {isUsed && (
+                    <span
+                      className="ms-3 mt-1"
+                      style={{ color: "red", fontSize: "1rem" }}
+                    >
+                      SKU must be Unique. Try Again
+                    </span>
+                  )}
                 </td>
               </tr>
 
